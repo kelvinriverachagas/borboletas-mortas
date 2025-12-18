@@ -71,6 +71,11 @@ p {
     color: var(--text);
 }
 
+.italic-primary {
+    font-style: italic;
+    color: var(--primary);
+}
+
 .drop-cap {
     font-size: 3em;
     font-weight: 700;
@@ -757,8 +762,8 @@ p {
    ============================================ */
 
 .cta-final {
-    padding: 6rem 0;
-    background: linear-gradient(135deg, var(--primary) 0%, rgba(139, 26, 26, 0.8) 100%);
+    padding: 6rem 0;    
+    background: linear-gradient(135deg, #0f090b 0%, #0f090b 100%);
     text-align: center;
     position: relative;
     overflow: hidden;
