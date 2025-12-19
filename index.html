@@ -65,7 +65,7 @@
                 </p>
                 <div class="hero-buttons">
                     <button class="btn btn-primary" id="btnComprar">Adquirir o Livro</button>
-                    <button class="btn btn-outline">Ler um Trecho (em breve)</button>
+                    <button class="btn btn-outline" id="btnLerTrecho">Ler um Trecho</button>
                 </div>
             </div>
 
@@ -217,6 +217,69 @@
             </div>
         </div>
     </footer>
+
+    <!-- Modal de Trecho -->
+    <div class="modal" id="excerptModal">
+        <div class="modal-content modal-carousel">
+            <button class="modal-close" id="excerptModalClose">&times;</button>
+            
+            <div class="modal-header">
+                <h2>Trecho do Livro</h2>
+            </div>
+
+            <div class="carousel-container">
+                <button class="carousel-btn carousel-prev" id="carouselPrev">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+
+                <div class="carousel-wrapper">
+                    <div class="carousel-track" id="carouselTrack">
+                        <div class="carousel-slide">
+                            <div class="excerpt-placeholder">
+                                <span>Página 1</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="excerpt-placeholder">
+                                <span>Página 2</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="excerpt-placeholder">
+                                <span>Página 3</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="excerpt-placeholder">
+                                <span>Página 4</span>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="excerpt-placeholder">
+                                <span>Página 5</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="carousel-btn carousel-next" id="carouselNext">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="carousel-indicators" id="carouselIndicators">
+                <span class="indicator active" data-slide="0"></span>
+                <span class="indicator" data-slide="1"></span>
+                <span class="indicator" data-slide="2"></span>
+                <span class="indicator" data-slide="3"></span>
+                <span class="indicator" data-slide="4"></span>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal de Compra -->
     <div class="modal" id="purchaseModal">
