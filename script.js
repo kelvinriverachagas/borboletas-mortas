@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initNavigation();
     initScrollEffects();
     initModal();
-    initButtons();
     initStripe();
 });
 
@@ -94,38 +93,42 @@ function initScrollEffects() {
    ============================================ */
 
 function initModal() {
-    const modal = document.getElementById('purchaseModal');
-    const modalClose = document.getElementById('modalClose');
-    const btnComprar = document.getElementById('btnComprar');
-    const btnComprarFinal = document.getElementById('btnComprarFinal');
+    setupModal('purchaseModal', ['btnComprar', 'btnComprarFinal']);
+    setupModal('excerptModal', ['btnLerTrecho']);
+}
 
-    // Open modal
-    [btnComprar, btnComprarFinal].forEach(btn => {
-        btn.addEventListener('click', () => {
+function setupModal(modalId, openTriggerIds) {
+    const modal = document.getElementById(modalId);
+    if (!modal) return;
+
+    const closeButtons = modal.querySelectorAll('.modal-close, .modal-close-bottom');
+
+    openTriggerIds.forEach(triggerId => {
+        const trigger = document.getElementById(triggerId);
+        trigger?.addEventListener('click', () => {
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
     });
 
-    // Close modal
-    modalClose.addEventListener('click', () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = 'auto';
+    closeButtons.forEach(btn => {
+        btn?.addEventListener('click', () => {
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
     });
 
-    // Close modal when clicking outside
     modal.addEventListener('click', (e) => {
         if (e.target === modal) {
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
     });
-
-    // Close modal with Escape key
+    
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && modal.classList.contains('active')) {
             modal.classList.remove('active');
-            document.body.style.overflow = 'auto';
+            document.body.style.overflow = '';
         }
     });
 }
@@ -135,40 +138,6 @@ function initModal() {
    ============================================ */
 
 function initButtons() {
-    const btnCheckout = document.getElementById('btnCheckout');
-    
-    btnCheckout.addEventListener('click', handleCheckout);
-}
-
-function handleCheckout() {
-    const selectedOption = document.querySelector('input[name="purchase-option"]:checked');
-    
-    if (!selectedOption) {
-        alert('Por favor, selecione uma opção de compra.');
-        return;
-    }
-
-    const option = selectedOption.value;
-    const prices = {
-        digital: 999,    // €9.99 em centavos
-        physical: 1250,  // €12.50 em centavos
-        bundle: 1999     // €19.99 em centavos
-    };
-
-    const amount = prices[option];
-
-    // Verificar se Stripe está disponível
-    if (typeof Stripe === 'undefined') {
-        console.error('Stripe não foi carregado. Verifique sua chave pública.');
-        alert('Sistema de pagamento não disponível. Por favor, tente novamente mais tarde.');
-        return;
-    }
-
-    // Aqui você iniciaria o checkout do Stripe
-    console.log('Iniciando checkout para:', option, 'Valor:', amount);
-    
-    // Placeholder para integração real com Stripe
-    alert(`Checkout iniciado para: ${option}\nValor: €${(amount / 100).toFixed(2)}\n\nEm breve você será redirecionado para o pagamento.`);
 }
 
 /* ============================================
@@ -250,10 +219,7 @@ document.getElementById('btnComprarFinal')?.addEventListener('click', () => {
     trackEvent('purchase_modal_opened', { source: 'cta' });
 });
 
-document.getElementById('btnCheckout')?.addEventListener('click', () => {
-    const option = document.querySelector('input[name="purchase-option"]:checked')?.value;
-    trackEvent('checkout_initiated', { purchase_type: option });
-});
+
 
 /* ============================================
    VALIDAÇÃO E SEGURANÇA
@@ -315,91 +281,5 @@ function prefetchResources() {
 }
 
 prefetchResources();
-
-/* ============================================
-   EXCERPT MODAL CAROUSEL
-   ============================================ */
-
-const excerptModal = document.getElementById('excerptModal');
-const excerptModalClose = document.getElementById('excerptModalClose');
-const btnLerTrecho = document.getElementById('btnLerTrecho');
-const carouselTrack = document.getElementById('carouselTrack');
-const carouselPrev = document.getElementById('carouselPrev');
-const carouselNext = document.getElementById('carouselNext');
-const carouselIndicators = document.getElementById('carouselIndicators');
-
-let currentSlide = 0;
-const totalSlides = 5;
-
-// Open excerpt modal
-btnLerTrecho?.addEventListener('click', () => {
-    excerptModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-    currentSlide = 0;
-    updateCarousel();
-});
-
-// Close excerpt modal
-excerptModalClose?.addEventListener('click', () => {
-    excerptModal.classList.remove('active');
-    document.body.style.overflow = '';
-});
-
-excerptModal?.addEventListener('click', (e) => {
-    if (e.target === excerptModal) {
-        excerptModal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-});
-
-// Carousel navigation
-function updateCarousel() {
-    const offset = -currentSlide * 100;
-    carouselTrack.style.transform = `translateX(${offset}%)`;
-    
-    // Update indicators
-    document.querySelectorAll('.indicator').forEach((indicator, index) => {
-        indicator.classList.toggle('active', index === currentSlide);
-    });
-    
-    // Update button states
-    carouselPrev.disabled = currentSlide === 0;
-    carouselNext.disabled = currentSlide === totalSlides - 1;
-}
-
-carouselPrev?.addEventListener('click', () => {
-    if (currentSlide > 0) {
-        currentSlide--;
-        updateCarousel();
-    }
-});
-
-carouselNext?.addEventListener('click', () => {
-    if (currentSlide < totalSlides - 1) {
-        currentSlide++;
-        updateCarousel();
-    }
-});
-
-// Indicator click
-carouselIndicators?.addEventListener('click', (e) => {
-    if (e.target.classList.contains('indicator')) {
-        currentSlide = parseInt(e.target.dataset.slide);
-        updateCarousel();
-    }
-});
-
-// Keyboard navigation
-document.addEventListener('keydown', (e) => {
-    if (excerptModal.classList.contains('active')) {
-        if (e.key === 'ArrowLeft' && currentSlide > 0) {
-            currentSlide--;
-            updateCarousel();
-        } else if (e.key === 'ArrowRight' && currentSlide < totalSlides - 1) {
-            currentSlide++;
-            updateCarousel();
-        }
-    }
-});
 
 console.log('✅ Script carregado com sucesso');

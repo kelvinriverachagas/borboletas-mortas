@@ -690,6 +690,11 @@ p {
     grid-template-columns: 1fr 1fr;
     gap: 4rem;
     align-items: center;
+
+
+}.text-primary-light {
+    color: var(--primary-light);
+    text-transform: uppercase;
 }
 
 @media (max-width: 768px) {
@@ -983,6 +988,12 @@ p {
     padding: 2rem;
 }
 
+.modal-footer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border);
+    text-align: right;
+}
+
 .product-info {
     display: grid;
     grid-template-columns: 150px 1fr;
@@ -1083,6 +1094,40 @@ p {
     margin-top: 1rem;
 }
 
+.presentation-text p {
+    font-size: 1.1rem;
+    color: var(--text);
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 1.5rem;
+}
+
+.presentation-text p:last-child {
+    margin-bottom: 0;
+}
+
+.presentation-quote {
+    background: rgba(139, 26, 26, 0.1);
+    border-left: 3px solid var(--primary-light);
+    padding: 1.5rem;
+    margin-top: 2rem;
+    border-radius: 2px;
+}
+
+.presentation-quote blockquote {
+    margin: 0;
+    font-size: 1.2rem;
+    font-style: italic;
+    color: var(--gold-light);
+    text-align: center;
+}
+
+@media (min-width: 1024px) {
+    .modal-content {
+        max-width: 800px;
+    }
+}
+
 /* ============================================
    RESPONSIVIDADE
    ============================================ */
@@ -1134,125 +1179,4 @@ p {
     background: var(--primary-light);
 }
 
-/* ============================================
-   MODAL CAROUSEL STYLES
-   ============================================ */
 
-.modal-carousel {
-    max-width: 900px;
-    padding: 2rem;
-}
-
-.carousel-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin: 2rem 0;
-}
-
-.carousel-wrapper {
-    flex: 1;
-    overflow: hidden;
-    border-radius: 8px;
-}
-
-.carousel-track {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
-}
-
-.carousel-slide {
-    min-width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.excerpt-placeholder {
-    width: 100%;
-    max-width: 400px;
-    aspect-ratio: 3/4;
-    background: linear-gradient(135deg, rgba(139, 69, 19, 0.1), rgba(184, 134, 11, 0.1));
-    border: 2px dashed var(--primary);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2rem;
-    color: var(--primary);
-    font-family: var(--font-display);
-}
-
-.carousel-btn {
-    background: var(--primary);
-    border: none;
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    flex-shrink: 0;
-}
-
-.carousel-btn:hover {
-    background: var(--primary-dark);
-    transform: scale(1.1);
-}
-
-.carousel-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-    transform: scale(1);
-}
-
-.carousel-btn svg {
-    width: 24px;
-    height: 24px;
-    stroke: white;
-}
-
-.carousel-indicators {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-    margin-top: 1.5rem;
-}
-
-.indicator {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: rgba(139, 69, 19, 0.3);
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.indicator.active {
-    background: var(--primary);
-    width: 24px;
-    border-radius: 5px;
-}
-
-@media (max-width: 768px) {
-    .modal-carousel {
-        padding: 1rem;
-    }
-
-    .carousel-btn {
-        width: 40px;
-        height: 40px;
-    }
-
-    .carousel-btn svg {
-        width: 20px;
-        height: 20px;
-    }
-
-    .excerpt-placeholder {
-        max-width: 300px;
-    }
-}
